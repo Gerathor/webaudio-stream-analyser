@@ -1,0 +1,2 @@
+import concatBuffer from 'concat';
+
