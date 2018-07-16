@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "http-server -p 7000",
+    "start": "yarn build; http-server -p 7000",
     "build": "browserify -d -s StreamVisulizer -t babelify ./src/index.js -o ./dist/index.js"
   },
   "keywords": [

@@ -3,33 +3,46 @@
 <head>
     <meta charset="utf-8" />
  
-    <title>AudioCapture</title>
+    <title>Audio Visulizer</title>
 	<link rel="stylesheet" href="./app.css"/>
 	<script type="text/javascript" src="./dist/index.js"></script>
 </head>
 
-<body onload='start();' onkeydown='handleKeydown(event);'>
-	<div id="main-content-container">
-		<h1>Overlay PiP</h1>
-		<h2>'Up' button to start audiocapture</h2>
-		<h2>'Down' button to stop audiocapture.</h2>
-		<div id="result_container">
-			<div id="visualizer_wrapper">
-				<canvas id='canvas' width="800" height="350"></canvas>
-			</div>
-			<h2>Result</h2>
-			<div id='result'></div>
+<body onload='init()'>
+	<div id="main-content-container" >
+		<button onclick="start()">start</button>
+		<button onclick="stop()">stop</button>
+		<div id="visualizer_wrapper">
+			<canvas id='canvas' width="800" height="350"></canvas>
 		</div>
     </div>
-    <script>
-        const start = () => {
-            console.log(`[${new Date()}] AudioCapture App Start...`);
-            let player = new StreamVisulizer()
-        }
-        
-        const handleKeydown = () => {
+    <script>		
+		const url = 'ws://109.123.120.200:8080';
+		const ws = new WebSocket(url);
+		// 接受二进制数据，需要配置binaryType
+		ws.binaryType = 'arraybuffer';
+		let player;
 
+        const init = () => {
+			console.log(`[${new Date()}] AudioCapture App Start...`);
+			
+			player = new StreamVisulizer();
         }
+		
+		const start = () => {
+			// 绑定链接open & close 事件
+			ws.addEventListener('open', event => (console.log(`[${new Date()}] ws server open sucess!`)));
+			ws.addEventListener('close', event => (console.log(`[${new Date()}] ws server closed!`)));
+
+			ws.addEventListener('message', event => {
+				let raw = new Uint8Array(event.data);				
+				player.feed(raw);
+			});
+		}
+		const stop = () => {
+			player.stop();
+		}
+
 
     </script>
 </body>
