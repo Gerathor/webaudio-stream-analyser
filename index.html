@@ -5,7 +5,7 @@
  
     <title>Audio Visulizer</title>
 	<link rel="stylesheet" href="./app.css"/>
-	<script type="text/javascript" src="./dist/index.js"></script>
+	
 </head>
 
 <body onload='init()'>
@@ -18,18 +18,15 @@
     </div>
     <script>		
 		const url = 'ws://109.123.120.200:8080';
-		const ws = new WebSocket(url);
-		// 接受二进制数据，需要配置binaryType
-		ws.binaryType = 'arraybuffer';
-		let player;
+		let ws, player;	
 
         const init = () => {
 			console.log(`[${new Date()}] AudioCapture App Start...`);
-			
+			ws = new WebSocket(url);
+
+			// 接受二进制数据，需要配置binaryType
+			ws.binaryType = 'arraybuffer';
 			player = new StreamVisulizer();
-        }
-		
-		const start = () => {
 			// 绑定链接open & close 事件
 			ws.addEventListener('open', event => (console.log(`[${new Date()}] ws server open sucess!`)));
 			ws.addEventListener('close', event => (console.log(`[${new Date()}] ws server closed!`)));
@@ -38,12 +35,21 @@
 				let raw = new Uint8Array(event.data);				
 				player.feed(raw);
 			});
+
+        }
+		
+		const start = () => {
+			ws.send('start');
 		}
+		
 		const stop = () => {
 			player.stop();
 		}
 
+		
 
-    </script>
+
+	</script>
+	<script type="text/javascript" src="./dist/index.js"></script>
 </body>
 </html>

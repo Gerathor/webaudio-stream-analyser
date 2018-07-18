@@ -1,8 +1,5 @@
 // Concat two Stream ArrayBuffers
 const concatBuffer = (prev, next) => {
-    
-    //console.log(`${next.byteLength}`);
-    //console.log(`${prev.byteLength}`);
 
     const mid = new Uint8Array(prev.byteLength + next.byteLength);
 

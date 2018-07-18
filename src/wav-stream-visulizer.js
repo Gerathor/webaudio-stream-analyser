@@ -1,4 +1,3 @@
-import concatBuffer from './concat';
 import wavHead from './add-header';
 
 class StreamVisulizer {
@@ -11,11 +10,33 @@ class StreamVisulizer {
 
         // private props
         this._hasCanceled = false;
-        this._restRawData = null;
-        this.startTime = 0;
+        this._timeoutId = null;
         this._1st = true;
         
-        // start timeout interval
+        this.numberOfChannels = 0;
+        this.sampleRate = 0;
+    }
+
+    _schuledBuf() {
+        //console.log(`[${new Date()}] _schuledBuf Len: ${this.audioStack.length}`);
+
+        if (this.audioStack.length === 0 ) {
+            clearTimeout(this._timeoutId);
+            this._timeoutId = null;
+            return;
+        };
+        
+        const source = this.context.createBufferSource();
+        const segment = this.audioStack.shift();
+            
+        source.buffer = segment.buf;
+        let duration = source.buffer.duration;
+        source.connect(this.context.destination);
+
+        console.log(`This segment duration: ${duration}`);
+        source.start();
+
+        this._timeoutId = setTimeout(() => this._schuledBuf(), 1000 * duration);
     }
 
     // public func
@@ -28,31 +49,36 @@ class StreamVisulizer {
         // 检查一下是否因为数据是奇数，导致有1个字节的残留数据
         // 有的话就，就先加进去，再concat
 
-        // concat new buffer
+        // process new buffer
         let buf, audioSegment = {};
         if (this._1st) {
-            buf = raw.buffer;//concatBuffer(new Uint8Array(0), raw);
+            buf = raw.buffer;
+            const dataView = new DataView(buf);
+
+            this.numberOfChannels = dataView.getUint16(22, true);
+            this.sampleRate = dataView.getUint32(24, true);
+
+            buf = buf.slice(44);
+            console.log(`numberOfChannels: ${this.numberOfChannels}, sampleRate: ${this.sampleRate}`);
             this._1st = false;
         } else {
-            buf = wavHead(raw, 48000, 2);
-            
+            buf = raw.buffer;
         }
-        console.log(buf)
+
         // decode raw data, send to scheduleBuffer
         this.context
-            .decodeAudioData(buf)
+            .decodeAudioData(wavHead(buf, this.sampleRate, this.numberOfChannels))
             .then(audioBuf => {
-                console.log(`duration: ${audioBuf.duration}`);
 
                 audioSegment.buf = audioBuf;
                 audioSegment.duration = audioBuf.duration;
 
                 this.audioStack.push(audioSegment);
-                const source = this.context.createBufferSource();
-                source.buffer = audioBuf;
-                source.connect(this.context.destination);
-                source.start(this.startTime);
-                this.startTime += audioBuf.duration;
+
+                if (this._timeoutId === null) {
+                    console.log(`start _schuledBuf`);
+                    this._schuledBuf()
+                }
             });
     }
 

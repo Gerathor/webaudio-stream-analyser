@@ -25,10 +25,10 @@ const wavHead = (data, sampleRate, numberOfChannels) => {
 
     h.setUint32(16, 16, true);
     h.setUint16(20, 1, true);
-    h.setUint16(22, numberOfChannels, true); //numberOfChannels
-    h.setUint32(24, sampleRate, true); // sampleRate
-    h.setUint32(28, sampleRate * 1 * 2, true); // sampleRate chunk size
-    h.setUint16(32, numberOfChannels * 2, true); // numberOfChannels chunk size
+    h.setUint16(22, numberOfChannels, true); 
+    h.setUint32(24, sampleRate, true); 
+    h.setUint32(28, sampleRate * 1 * 2, true); 
+    h.setUint16(32, numberOfChannels * 2, true);
     h.setUint16(34, 16, true);
 
     h.setUint8(36, 'd'.charCodeAt(0));
