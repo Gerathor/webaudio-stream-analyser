@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 const fs = require('fs');
 
-const pcm_file = './win-wav.wav';
+const pcm_file = './stream/win-wav.wav';
 let interval = 0,
     bytesChunk = 292000,
     offset = 0,

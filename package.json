@@ -4,7 +4,7 @@
   "description": "pcm raw data player using WebAudio API to show spectrum visualization",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node server.js",
     "start": "yarn build; http-server -p 7000",
     "build": "browserify -d -s StreamVisulizer -t babelify ./src/index.js -o ./dist/index.js"
   },
