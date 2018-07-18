@@ -45,6 +45,14 @@
 			player.stop();
 		}
 
+		setInterval(() => {
+			let analyser = player.getAnalyzser();
+			var array = new Uint8Array(analyser.frequencyBinCount);
+			analyser.getByteFrequencyData(array);
+			
+			console.log(array);
+		}, 1000);
+
 	</script>
 	<script type="text/javascript" src="./dist/index.js"></script>
 </body>

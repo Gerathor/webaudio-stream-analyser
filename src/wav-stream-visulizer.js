@@ -6,6 +6,7 @@ class StreamVisulizer {
         console.log(`----------construct-------------`);
         
         this.context = new AudioContext();
+        this.analyser = this.context.createAnalyser();
         this.audioStack = [];
 
         // private props
@@ -24,14 +25,17 @@ class StreamVisulizer {
             clearTimeout(this._timeoutId);
             this._timeoutId = null;
             return;
-        };
+        };        
         
         const source = this.context.createBufferSource();
-        const segment = this.audioStack.shift();
+        const segment = this.audioStack.shift();        
             
         source.buffer = segment.buf;
         let duration = source.buffer.duration;
-        source.connect(this.context.destination);
+        //connect the source to the analyser
+        source.connect(this.analyser);
+        this.analyser.connect(this.context.destination);
+        //source.connect(this.context.destination);
 
         console.log(`This segment duration: ${duration}`);
         source.start();
@@ -46,6 +50,7 @@ class StreamVisulizer {
             return;
         }        
 
+        // Todo
         // 检查一下是否因为数据是奇数，导致有1个字节的残留数据
         // 有的话就，就先加进去，再concat
 
@@ -84,17 +89,19 @@ class StreamVisulizer {
 
     stop () {
         this._hasCanceled = true;
+        clearTimeout(this._timeoutId);
+
+        this.audioStack = [];
+        this._timeoutId = null;
+
         if (this.context) {
             this.context.close();
+            
         }
     }
 
-    recorder () {
-
-    }
-
-    saveWav () {
-
+    getAnalyzser () {
+        return this.analyser;
     }
 }
 
