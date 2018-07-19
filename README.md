@@ -1,4 +1,4 @@
-# webaudio-stream-visulizer
+# webaudio-stream-analyser
 pcm raw data player using WebAudio API to show spectrum visualization
 
 ## Todo List
