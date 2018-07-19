@@ -1,6 +1,12 @@
 # webaudio-stream-visulizer
 pcm raw data player using WebAudio API to show spectrum visualization
 
+## Todo List
+-   npm publish
+-   ugly code script
+-   canvas example
+-   En readme guide
+
 技术实现基于，webAudio相关api，pcm-raw data 可以通过手动添加WAV head的方式用decode接口来解码。波形频谱的计算也是基于analyzer api。
 
 ## 接口模块组成

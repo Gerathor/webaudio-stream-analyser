@@ -1,5 +1,5 @@
 {
-  "name": "webaudio-stream-visulizer",
+  "name": "webaudio-stream-analyser",
   "version": "0.1.0",
   "description": "pcm raw data player using WebAudio API to show spectrum visualization",
   "main": "./dist/index.js",
@@ -13,7 +13,7 @@
     "pcm-data",
     "stream",
     "webaudio",
-    "visulizer",
+    "analyser",
     "spectrum"
   ],
   "author": "Feng Zhao <zhaofeng.vip@gmail.com>",

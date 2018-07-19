@@ -1,6 +1,6 @@
 import wavHead from './add-header';
 
-class StreamVisulizer {
+class StreamAnalyser {
 
     constructor() {
         console.log(`----------construct-------------`);
@@ -35,7 +35,6 @@ class StreamVisulizer {
         //connect the source to the analyser
         source.connect(this.analyser);
         this.analyser.connect(this.context.destination);
-        //source.connect(this.context.destination);
 
         console.log(`This segment duration: ${duration}`);
         source.start();
@@ -100,10 +99,17 @@ class StreamVisulizer {
         }
     }
 
+    getAudioInfo () {
+        return {
+            channels: this.numberOfChannels,
+            sampleRate : this.sampleRate
+        }
+    }
+
     getAnalyzser () {
         return this.analyser;
     }
 }
 
-export default StreamVisulizer;
+export default StreamAnalyser;
 

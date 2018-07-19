@@ -1,4 +1,4 @@
-import StreamVisulizer from './wav-stream-visulizer';
+import StreamAnalyser from './wav-stream-analyser';
 
-export default StreamVisulizer;
-module.exports = StreamVisulizer;
+export default StreamAnalyser;
+module.exports = StreamAnalyser;
