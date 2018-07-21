@@ -6,7 +6,7 @@
   "scripts": {
     "server": "node server.js",
     "start": "yarn build; http-server -p 7000",
-    "build": "browserify -d -s StreamVisulizer -t babelify index.js -o ./dist/index.js"
+    "build": "browserify -d -s StreamVisulizer -t babelify index.js -o ./dist/wav-stream-analyser.js"
   },
   "keywords": [
     "wav",
