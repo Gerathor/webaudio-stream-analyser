@@ -12,7 +12,7 @@ yarn build
 yarn start
 ````
 
-![img]()
+![img](./stream/demo.png)
 
 ## Usage
 
