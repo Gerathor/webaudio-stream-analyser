@@ -46,7 +46,7 @@
 
 			// 接收二进制数据，需要配置binaryType
 			ws.binaryType = 'arraybuffer';
-			player = new StreamVisulizer();
+			player = new StreamAnalyser();
 			// 绑定链接open & close 事件
 			ws.addEventListener('open', event => (console.log(`[${new Date()}] ws server open sucess!`)));
 			ws.addEventListener('close', event => (console.log(`[${new Date()}] ws server closed!`)));
@@ -134,9 +134,6 @@
 			}
 			animationId = requestAnimationFrame(drawSpectrum);
 		}
-
-
-		
 
 	</script>
 	<script type="text/javascript" src="./dist/wav-stream-analyser.min.js"></script>

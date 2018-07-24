@@ -162,5 +162,5 @@ class StreamAnalyser {
     }
 }
 
-export default StreamAnalyser;
-
+//export default StreamAnalyser;
+module.exports = StreamAnalyser;
