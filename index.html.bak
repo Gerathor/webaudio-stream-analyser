@@ -35,11 +35,7 @@
 		<div id="visualizer_wrapper">
 			<canvas id='canvas' width="800" height="350"></canvas>
 		</div>
-	</div>
-	<script src="animation.js"></script>
-	<script type="script/worker" id="workerCode">
-	
-	</script>
+    </div>
     <script>		
 		const url = 'ws://109.123.120.200:5000';
 		let ws, player;	
@@ -139,16 +135,6 @@
 			animationId = requestAnimationFrame(drawSpectrum);
 		}
 
-	</script>
-	<script>
-		(async () => {
-
-			// new feature detect.
-			document.querySelector('main').classList.toggle(
-				'supported', ('OffscreenCanvas' in window));
-
-			
-		})();
 	</script>
 	<script type="text/javascript" src="./dist/wav-stream-analyser.min.js"></script>
 </body>
